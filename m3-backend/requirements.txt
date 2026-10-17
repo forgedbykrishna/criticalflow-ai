@@ -1,0 +1,11 @@
+fastapi>=0.110
+uvicorn[standard]>=0.29
+sqlalchemy>=2.0
+psycopg[binary]>=3.1
+pydantic-settings>=2.2
+jsonschema>=4.20
+pandas>=2.0
+pyarrow>=15        # only needed for .parquet input
+python-multipart>=0.0.9   # file-upload endpoint
+httpx>=0.27        # M3 -> M4/M5 calls (and tests)
+pytest>=8

@@ -1,0 +1,19 @@
+{
+  "schema_version": "1.0.0",
+  "incident_id": "INC-20260930-JOB06340-PAYGATE4",
+  "timestamp": "2026-09-30T11:32:10Z",
+  "system_id": "SYSB",
+  "subsystem": "PAYMENT-API",
+  "job_name": "PAYGATE4",
+  "job_id": "JOB06340",
+  "step_name": "STEP010",
+  "completion_status": "CC",
+  "return_code": 8,
+  "abend_code": null,
+  "primary_message_id": "IEF142I",
+  "cpu_utilization_pct": 94.1,
+  "error_rate_pct": 42.0,
+  "transaction_volume_per_hr": 97300,
+  "recent_deployment_flag": false,
+  "raw_log_snippet": "11.05.14 JOB06340  $HASP373 PAYGATE4 STARTED - INIT 7    - CLASS A - SYS SYSB\n11.05.14 JOB06340  IEF403I PAYGATE4 - STARTED - TIME=11.05.14\n11.31.40 JOB06340  PAY9107W PAYGATE4 QUEUE DEPTH=48211 EXCEEDS THRESHOLD=10000\n11.31.55 JOB06340  PAY9114E PAYGATE4 ERROR RATE 42.0 PCT EXCEEDS LIMIT 5.0 PCT\n11.32.09 JOB06340  IEF142I PAYGATE4 STEP010 - STEP WAS EXECUTED - COND CODE 0008\n11.32.10 JOB06340  CFMETRIC SUBSYS=PAYMENT-API SYSID=SYSB CPU_PCT=94.1 ERR_PCT=42.0 TPH=97300 DEPLOY=N\n11.32.10 JOB06340  IEF404I PAYGATE4 - ENDED - TIME=11.32.10\n11.32.10 JOB06340  $HASP395 PAYGATE4 ENDED - RC=0008"
+}

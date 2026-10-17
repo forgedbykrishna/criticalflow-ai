@@ -1,0 +1,141 @@
+name: criticalflow-ai
+
+services:
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: criticalflow
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+    ports:
+      - "127.0.0.1:${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d criticalflow"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+      start_period: 5s
+    restart: unless-stopped
+
+  m4-prediction:
+    build:
+      context: ./m4-prediction
+    ports:
+      - "${M4_PORT:-8001}:8001"
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8001/health', timeout=3)"
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    restart: unless-stopped
+
+  m5-llm:
+    build:
+      context: ./rag
+    command: ["uvicorn", "api:app", "--host", "0.0.0.0", "--port", "8000"]
+    ports:
+      - "${M5_PORT:-8002}:8000"
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=3)"
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    restart: unless-stopped
+
+  m3-backend:
+    build:
+      context: ./m3-backend
+    environment:
+      DATABASE_URL: postgresql+psycopg://postgres:${POSTGRES_PASSWORD:-postgres}@postgres:5432/criticalflow
+      M4_URL: http://m4-prediction:8001
+      M5_URL: http://m5-llm:8000
+    ports:
+      - "${M3_PORT:-8000}:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      m4-prediction:
+        condition: service_healthy
+      m5-llm:
+        condition: service_healthy
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=3)"
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+    restart: unless-stopped
+
+  # Live IBM z/OSMF polling is opt-in. Set ZOSMF_* values in the shell or a local .env file.
+  m2-ibmz:
+    profiles: ["live-zosmf"]
+    build:
+      context: ./m2_ibmz
+    environment:
+      MOCK_MODE: "False"
+      ZOSMF_URL: ${ZOSMF_URL:-}
+      ZOSMF_USER: ${ZOSMF_USER:-}
+      ZOSMF_PASSWORD: ${ZOSMF_PASSWORD:-}
+      ZOSMF_VERIFY_TLS: ${ZOSMF_VERIFY_TLS:-true}
+      CF_JOB_PREFIX: ${CF_JOB_PREFIX:-PAY*,GL*}
+      CF_JOB_OWNER: ${CF_JOB_OWNER:-*}
+      CF_DEFAULT_SUBSYSTEM: ${CF_DEFAULT_SUBSYSTEM:-PAYMENT-API}
+      CF_DEFAULT_SYSTEM_ID: ${CF_DEFAULT_SYSTEM_ID:-AUTO}
+      API_BASE_URL: http://m3-backend:8000
+      API_TOKEN: ${API_TOKEN:-}
+      CF_STATE_FILE: /data/state.json
+      CF_QUARANTINE_DIR: /data/quarantine
+      CF_HEARTBEAT_FILE: /data/heartbeat
+    volumes:
+      - m2_state:/data
+    depends_on:
+      m3-backend:
+        condition: service_healthy
+    # Uses the image's HEALTHCHECK (docker/healthcheck.py: heartbeat file must be fresh).
+    restart: unless-stopped
+
+  # The dashboard reads from local PostgreSQL by default, or an external SSL URL if DASHBOARD_DATABASE_URL is set.
+  dashboard:
+    profiles: ["dashboard"]
+    build:
+      context: ./m6_dashboard
+    environment:
+      DATABASE_URL: ${DASHBOARD_DATABASE_URL:-postgresql://postgres:${POSTGRES_PASSWORD:-postgres}@postgres:5432/criticalflow}
+    ports:
+      - "${DASHBOARD_PORT:-8501}:8501"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      m3-backend:
+        condition: service_healthy
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8501/_stcore/health', timeout=3)"
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 15s
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+  m2_state:

@@ -1,0 +1,19 @@
+{
+  "schema_version": "1.0.0",
+  "incident_id": "INC-20261011-JOB03538-Z75376D",
+  "timestamp": "2026-10-11T05:08:52Z",
+  "system_id": "S0W1",
+  "subsystem": "PAYMENT-API",
+  "job_name": "Z75376D",
+  "job_id": "JOB03538",
+  "step_name": "STEP010",
+  "completion_status": "CC",
+  "return_code": 8,
+  "abend_code": null,
+  "primary_message_id": "IEF142I",
+  "cpu_utilization_pct": null,
+  "error_rate_pct": null,
+  "transaction_volume_per_hr": null,
+  "recent_deployment_flag": false,
+  "raw_log_snippet": "00.08.52 JOB03538  $HASP373 Z75376D  STARTED - INIT 2    - CLASS 7        - SYS S0W1\n00.08.52 JOB03538  -STEPNAME PROCSTEP    RC   EXCP   CONN       TCB       SRB  CLOCK          SERV  WORKLOAD  PAGE  SWAP   VIO SWAPS\n00.08.52 JOB03538  $HASP395 Z75376D  ENDED - RC=0008\nIEF236I ALLOC. FOR Z75376D STEP010\nIEF237I JES2 ALLOCATED TO SYSPRINT\nIEF237I JES2 ALLOCATED TO SYSIN\nIEF142I Z75376D STEP010 - STEP WAS EXECUTED - COND CODE 0008\nIEF285I   Z75376.Z75376D.JOB03538.D0000102.?           SYSOUT\nIEF285I   Z75376.Z75376D.JOB03538.D0000101.?           SYSIN\nIEF373I STEP/STEP010 /START 2026284.0008\nIEF032I STEP/STEP010 /STOP  2026284.0008\nIEF375I  JOB/Z75376D /START 2026284.0008\nIEF033I  JOB/Z75376D /STOP  2026284.0008\nCFMETRIC SUBSYS=PAYMENT-API DEPLOY=N"
+}

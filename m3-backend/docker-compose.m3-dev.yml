@@ -1,0 +1,42 @@
+# M3 on its own, with a real PostgreSQL and FAKE M4/M5 so you can run + demo the whole chain without the team.
+#   docker compose -f docker-compose.m3-dev.yml up --build
+# Then open http://localhost:8000/docs.  (The team's combined docker-compose.yml is owned by the leader.)
+services:
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: criticalflow
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-devpassword}
+    ports: ["5432:5432"]
+    volumes: [postgres_data:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d criticalflow"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+
+  m3-backend:
+    build: .
+    ports: ["8000:8000"]
+    environment:
+      DATABASE_URL: postgresql+psycopg://postgres:${POSTGRES_PASSWORD:-devpassword}@postgres:5432/criticalflow
+      M4_URL: http://m4-prediction:8001
+      M5_URL: http://m5-llm:8002
+    depends_on:
+      postgres: {condition: service_healthy}
+      m4-prediction: {condition: service_started}
+      m5-llm: {condition: service_started}
+
+  m4-prediction:            # fake M4 (replace with the real M4 image when it exists)
+    build: .
+    command: uvicorn mocks.m4_mock:app --host 0.0.0.0 --port 8001
+    ports: ["8001:8001"]
+
+  m5-llm:                   # fake M5 (replace with the real M5 image when it exists)
+    build: .
+    command: uvicorn mocks.m5_mock:app --host 0.0.0.0 --port 8002
+    ports: ["8002:8002"]
+
+volumes:
+  postgres_data:

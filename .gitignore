@@ -1,0 +1,18 @@
+# secrets
+.env
+.env.*
+!.env.example
+
+# python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# misc
+.DS_Store
+*.zip
+.pytest_cache/
+*.log
+.cf_harvest_state.json
+quarantine/

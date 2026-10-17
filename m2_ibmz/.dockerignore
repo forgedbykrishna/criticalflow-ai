@@ -1,0 +1,12 @@
+.venv/
+__pycache__/
+*.py[cod]
+.env
+.env.*
+!.env.example
+events/
+quarantine/
+.cf_harvest_state.json
+state.json
+*.zip
+.git

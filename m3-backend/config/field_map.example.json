@@ -1,0 +1,7 @@
+{
+  "_comment": "source column name -> CriticalFlow contract field name. Unlisted columns pass through unchanged.",
+  "event_id": "incident_id",
+  "system": "system_id",
+  "ts": "timestamp",
+  "cpu_pct": "cpu_utilization_pct"
+}

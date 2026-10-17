@@ -1,0 +1,19 @@
+{
+  "schema_version": "1.0.0",
+  "incident_id": "INC-20260930-JOB04127-PAYSETL1",
+  "timestamp": "2026-09-30T02:24:13Z",
+  "system_id": "SYSA",
+  "subsystem": "PAYMENT-API",
+  "job_name": "PAYSETL1",
+  "job_id": "JOB04127",
+  "step_name": "STEP020",
+  "completion_status": "CC",
+  "return_code": 0,
+  "abend_code": null,
+  "primary_message_id": "IEF142I",
+  "cpu_utilization_pct": 38.4,
+  "error_rate_pct": 0.0,
+  "transaction_volume_per_hr": 184200,
+  "recent_deployment_flag": false,
+  "raw_log_snippet": "02.15.01 JOB04127  $HASP373 PAYSETL1 STARTED - INIT 3    - CLASS A - SYS SYSA\n02.15.01 JOB04127  IEF403I PAYSETL1 - STARTED - TIME=02.15.01\n02.19.48 JOB04127  IEF142I PAYSETL1 STEP010 - STEP WAS EXECUTED - COND CODE 0000\n02.24.12 JOB04127  IEF142I PAYSETL1 STEP020 - STEP WAS EXECUTED - COND CODE 0000\n02.24.13 JOB04127  CFMETRIC SUBSYS=PAYMENT-API SYSID=SYSA CPU_PCT=38.4 ERR_PCT=0.0 TPH=184200 DEPLOY=N\n02.24.13 JOB04127  IEF404I PAYSETL1 - ENDED - TIME=02.24.13\n02.24.13 JOB04127  $HASP395 PAYSETL1 ENDED - RC=0000"
+}

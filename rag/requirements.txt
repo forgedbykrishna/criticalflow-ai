@@ -1,0 +1,10 @@
+streamlit
+fastapi
+uvicorn
+langchain
+langchain-community
+langchain-chroma
+langchain-huggingface
+langchain-ibm
+sentence-transformers
+pydantic

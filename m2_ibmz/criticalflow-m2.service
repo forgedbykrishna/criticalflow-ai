@@ -1,0 +1,18 @@
+# /etc/systemd/system/criticalflow-m2.service  (long-running poller)
+[Unit]
+Description=CriticalFlow AI M2 IBM Z extractor (z/OSMF -> API)
+After=network-online.target
+
+[Service]
+User=criticalflow
+WorkingDirectory=/opt/criticalflow/m2_ibmz_approach_a
+EnvironmentFile=/etc/criticalflow/m2.env
+ExecStart=/opt/criticalflow/venv/bin/python run_pipeline.py --interval 10 --purge
+Restart=on-failure
+RestartSec=15
+NoNewPrivileges=true
+ProtectSystem=strict
+ReadWritePaths=/var/lib/criticalflow
+
+[Install]
+WantedBy=multi-user.target

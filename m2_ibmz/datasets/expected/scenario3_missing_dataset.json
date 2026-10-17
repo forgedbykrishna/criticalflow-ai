@@ -1,0 +1,19 @@
+{
+  "schema_version": "1.0.0",
+  "incident_id": "INC-20260930-JOB05902-GLPOST03",
+  "timestamp": "2026-09-30T03:00:01Z",
+  "system_id": "SYSA",
+  "subsystem": "GL-BATCH",
+  "job_name": "GLPOST03",
+  "job_id": "JOB05902",
+  "step_name": "STEP010",
+  "completion_status": "JCL_ERROR",
+  "return_code": null,
+  "abend_code": null,
+  "primary_message_id": "IEF212I",
+  "cpu_utilization_pct": null,
+  "error_rate_pct": null,
+  "transaction_volume_per_hr": null,
+  "recent_deployment_flag": false,
+  "raw_log_snippet": "3 //STEPLIB  DD DISP=SHR,DSN=IBMZ.PROD.PAYMENT.LOAD\n4 //ACCTMST  DD DSN=IBMZ.PROD.ACCT.MASTER,DISP=SHR\n03.00.01 JOB05902  IEF212I GLPOST03 STEP010 ACCTMST - DATA SET NOT FOUND\n03.00.01 JOB05902  IEFC452I GLPOST03 - JOB NOT RUN - JCL ERROR\n03.00.01 JOB05902  IEF453I GLPOST03 - JOB FAILED - JCL ERROR - TIME=03.00.01\n03.00.01 JOB05902  $HASP395 GLPOST03 ENDED - JCL ERROR\nCFMETRIC SUBSYS=GL-BATCH SYSID=SYSA DEPLOY=N"
+}

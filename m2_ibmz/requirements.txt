@@ -1,0 +1,8 @@
+httpx>=0.27
+jsonschema>=4.20
+pydantic>=2.5
+fastapi>=0.110
+uvicorn>=0.27
+# production M3 only:
+# sqlalchemy[asyncio]>=2.0
+# asyncpg>=0.29

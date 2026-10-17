@@ -1,0 +1,19 @@
+{
+  "schema_version": "1.0.0",
+  "incident_id": "INC-20261011-JOB03537-Z75376C",
+  "timestamp": "2026-10-11T05:08:49Z",
+  "system_id": "S0W1",
+  "subsystem": "PAYMENT-API",
+  "job_name": "Z75376C",
+  "job_id": "JOB03537",
+  "step_name": "JCL",
+  "completion_status": "JCL_ERROR",
+  "return_code": null,
+  "abend_code": null,
+  "primary_message_id": "IEF453I",
+  "cpu_utilization_pct": null,
+  "error_rate_pct": null,
+  "transaction_volume_per_hr": null,
+  "recent_deployment_flag": false,
+  "raw_log_snippet": "00.08.49 JOB03537  $HASP373 Z75376C  STARTED - INIT 2    - CLASS 7        - SYS S0W1\n00.08.49 JOB03537  -STEPNAME PROCSTEP    RC   EXCP   CONN       TCB       SRB  CLOCK          SERV  WORKLOAD  PAGE  SWAP   VIO SWAPS\n00.08.49 JOB03537  IEF453I Z75376C - JOB FAILED - JCL ERROR\n00.08.49 JOB03537  $HASP395 Z75376C  ENDED\n3 //INFILE   DD DSN=Z75376.NO.SUCH.DATA,DISP=SHR\nIEF272I Z75376C STEP010 - STEP WAS NOT EXECUTED.\nIEF373I STEP/STEP010 /START 2026284.0008\nIEF032I STEP/STEP010 /STOP  2026284.0008\nIEF375I  JOB/Z75376C /START 2026284.0008\nIEF033I  JOB/Z75376C /STOP  2026284.0008\nCFMETRIC SUBSYS=PAYMENT-API DEPLOY=N"
+}

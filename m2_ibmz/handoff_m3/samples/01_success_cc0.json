@@ -1,0 +1,19 @@
+{
+  "schema_version": "1.0.0",
+  "incident_id": "INC-20261010-JOB00669-@JCL1",
+  "timestamp": "2026-10-10T05:35:55Z",
+  "system_id": "S0W1",
+  "subsystem": "PAYMENT-API",
+  "job_name": "@JCL1",
+  "job_id": "JOB00669",
+  "step_name": "VALIDATE",
+  "completion_status": "CC",
+  "return_code": 0,
+  "abend_code": null,
+  "primary_message_id": "IEF142I",
+  "cpu_utilization_pct": null,
+  "error_rate_pct": null,
+  "transaction_volume_per_hr": null,
+  "recent_deployment_flag": false,
+  "raw_log_snippet": "00.35.52 JOB00669  $HASP373 @JCL1    STARTED - INIT 2    - CLASS 7        - SYS S0W1\n00.35.55 JOB00669  -STEPNAME PROCSTEP    RC   EXCP   CONN       TCB       SRB  CLOCK          SERV  WORKLOAD  PAGE  SWAP   VIO SWAPS\n00.35.55 JOB00669  $HASP395 @JCL1    ENDED - RC=0000\n2 IEFC001I PROCEDURE ZXP$$CHK WAS EXPANDED USING SYSTEM LIBRARY VENDOR.PROCLIB\nIEF142I @JCL1 VALIDATE - STEP WAS EXECUTED - COND CODE 0000\nIEF373I STEP/VALIDATE/START 2026283.0035\nIEF032I STEP/VALIDATE/STOP  2026283.0035\nIEF375I  JOB/@JCL1   /START 2026283.0035\nIEF033I  JOB/@JCL1   /STOP  2026283.0035\nCFMETRIC SUBSYS=PAYMENT-API DEPLOY=N"
+}
