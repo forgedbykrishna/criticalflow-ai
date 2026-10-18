@@ -158,56 +158,56 @@ def normalize_incidents(source_df):
     # These compatibility columns let existing dashboard sections work
     # while keeping every original Neon column intact.
     aliases = {
-        "timestamp": lambda r: extract(r, "event_time", "created_at"),
+        "timestamp": lambda r: extract(r, "event_time", "created_at", "timestamp"),
         "system_id": lambda r: extract(r, "system", "system_id"),
         "risk_label": lambda r: extract(
-            r, "severity", "prediction.raw.severity"
+            r, "severity", "prediction.raw.severity", "risk_label"
         ),
         "risk_score": lambda r: extract(
-            r, "prediction.raw.risk_score", "anomaly_score"
+            r, "prediction.raw.risk_score", "anomaly_score", "risk_score"
         ),
         "incident_type": lambda r: extract(
-            r, "prediction.raw.incident_type", "event_type"
+            r, "prediction.raw.incident_type", "event_type", "incident_type"
         ),
         "completion_status": lambda r: extract(
             r, "incident_data.completion_status", "pipeline_status",
-            "incident_status", "event_type"
+            "incident_status", "event_type", "completion_status"
         ),
         "return_code": lambda r: extract(
-            r, "incident_data.return_code", "features.return_code"
+            r, "incident_data.return_code", "features.return_code", "return_code"
         ),
         "abend_code": lambda r: extract(
-            r, "incident_data.abend_code"
+            r, "incident_data.abend_code", "abend_code"
         ),
-        "job_id": lambda r: extract(r, "incident_data.job_id"),
-        "step_name": lambda r: extract(r, "incident_data.step_name"),
+        "job_id": lambda r: extract(r, "incident_data.job_id", "job_id"),
+        "step_name": lambda r: extract(r, "incident_data.step_name", "step_name"),
         "primary_message_id": lambda r: extract(
-            r, "incident_data.primary_message_id"
+            r, "incident_data.primary_message_id", "primary_message_id"
         ),
         "cpu_utilization_pct": lambda r: extract(
             r, "features.cpu_utilization_pct",
-            "incident_data.cpu_utilization_pct"
+            "incident_data.cpu_utilization_pct", "cpu_utilization_pct"
         ),
         "error_rate_pct": lambda r: extract(
-            r, "features.error_rate_pct", "incident_data.error_rate_pct"
+            r, "features.error_rate_pct", "incident_data.error_rate_pct", "error_rate_pct"
         ),
         "transaction_volume_per_hr": lambda r: extract(
             r, "features.transaction_volume_per_hr",
-            "incident_data.transaction_volume_per_hr"
+            "incident_data.transaction_volume_per_hr", "transaction_volume_per_hr"
         ),
-        "model_version": lambda r: extract(r, "prediction.raw.model_version"),
+        "model_version": lambda r: extract(r, "prediction.raw.model_version", "model_version"),
         "recent_deployment_flag": lambda r: extract(
             r, "features.recent_deployment",
-            "incident_data.recent_deployment_flag"
+            "incident_data.recent_deployment_flag", "recent_deployment_flag"
         ),
         "evidence": lambda r: extract(
-            r, "incident_data.raw_log_snippet", "pipeline_error"
+            r, "incident_data.raw_log_snippet", "pipeline_error", "evidence"
         ),
         "raw_log_snippet": lambda r: extract(
-            r, "incident_data.raw_log_snippet", "pipeline_error"
+            r, "incident_data.raw_log_snippet", "pipeline_error", "raw_log_snippet"
         ),
         "remediation": lambda r: extract(
-            r, "recommended_action", "prediction.raw.recommended_action"
+            r, "recommended_action", "prediction.raw.recommended_action", "remediation"
         ),
     }
 

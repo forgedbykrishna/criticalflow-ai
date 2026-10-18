@@ -74,12 +74,20 @@ def load_incidents():
         ORDER BY event_time DESC;
     """
 
-    with get_connection() as conn:
-        with conn.cursor(row_factory=dict_row) as cursor:
-            cursor.execute(query)
-            rows = cursor.fetchall()
-
-    return pd.DataFrame(rows)
+    try:
+        with get_connection() as conn:
+            with conn.cursor(row_factory=dict_row) as cursor:
+                cursor.execute(query)
+                rows = cursor.fetchall()
+        return pd.DataFrame(rows)
+    except Exception as exc:
+        mock_path = Path(__file__).resolve().parent / "mock_data" / "incidents.json"
+        if mock_path.exists():
+            import json
+            with open(mock_path, "r", encoding="utf-8") as f:
+                data = json.load(f)
+            return pd.DataFrame(data)
+        raise exc
 
 
 # --------------------------------------------------

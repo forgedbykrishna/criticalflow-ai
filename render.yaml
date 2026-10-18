@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: criticalflow-dashboard
+    runtime: python
+    buildCommand: pip install -r m6_dashboard/requirements.txt
+    startCommand: streamlit run m6_dashboard/app.py --server.port $PORT --server.address 0.0.0.0
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: DASHBOARD_DATABASE_URL
+        fromDatabase:
+          name: criticalflow-db
+          property: connectionString
+
+databases:
+  - name: criticalflow-db
+    databaseName: criticalflow
+    user: postgres
+    plan: free
