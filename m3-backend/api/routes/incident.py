@@ -13,7 +13,7 @@ from api.routes.ai_results import _incident_dict, _rca_dict
 from config.settings import get_settings
 from db.models import IncidentPipeline, IncidentResult, ProcessedEvent, RcaResult
 from db.repository import save_result
-from db.session import _factory, get_session
+from db.session import get_session, get_session_factory
 from ingestion.field_map import load_field_map
 from orchestration.service import mark_received, run_orchestration
 from processing.contract import load_contract
@@ -35,7 +35,7 @@ def _extract(body: Any) -> dict[str, Any]:
 
 def _background(event_id: str) -> None:
     try:
-        with _factory()() as session:
+        with get_session_factory()() as session:
             run_orchestration(session, event_id)
     except Exception:                                  # noqa: BLE001
         log.exception("background orchestration crashed for %s", event_id)

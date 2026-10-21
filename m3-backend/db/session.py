@@ -45,6 +45,11 @@ def init_db(engine: Engine | None = None) -> None:
             conn.execute(text(f"CREATE VIEW incident_overview AS {OVERVIEW_VIEW_SQL}"))
 
 
+def get_session_factory() -> sessionmaker[Session]:
+    """Return the shared session factory (use this instead of the private _factory)."""
+    return _factory()
+
+
 def get_session() -> Iterator[Session]:
     """FastAPI dependency."""
     with _factory()() as s:

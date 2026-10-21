@@ -24,6 +24,9 @@ services:
       context: ./m4-prediction
     ports:
       - "${M4_PORT:-8001}:8001"
+    environment:
+      PYTHONDONTWRITEBYTECODE: "1"
+      PYTHONUNBUFFERED: "1"
     healthcheck:
       test:
         - CMD
@@ -110,19 +113,19 @@ services:
     # Uses the image's HEALTHCHECK (docker/healthcheck.py: heartbeat file must be fresh).
     restart: unless-stopped
 
-  # The dashboard reads from local PostgreSQL by default, or an external SSL URL if DASHBOARD_DATABASE_URL is set.
+  # The dashboard reads directly from PostgreSQL (no M3 dependency at runtime).
+  # Set DASHBOARD_DATABASE_URL to use an external hosted database (e.g. Neon PostgreSQL).
   dashboard:
     profiles: ["dashboard"]
     build:
       context: ./m6_dashboard
     environment:
       DATABASE_URL: ${DASHBOARD_DATABASE_URL:-postgresql://postgres:${POSTGRES_PASSWORD:-postgres}@postgres:5432/criticalflow}
+      DB_SSLMODE: ${DB_SSLMODE:-prefer}
     ports:
       - "${DASHBOARD_PORT:-8501}:8501"
     depends_on:
       postgres:
-        condition: service_healthy
-      m3-backend:
         condition: service_healthy
     healthcheck:
       test:
@@ -133,7 +136,7 @@ services:
       interval: 10s
       timeout: 5s
       retries: 10
-      start_period: 15s
+      start_period: 20s
     restart: unless-stopped
 
 volumes:
